@@ -5,7 +5,9 @@ package com.mistershorr.loginandregistration
 object RegistrationUtil {
     // use this in the test class for the is username taken test
     // make another similar list for some taken emails
-    var existingUsers = listOf("cosmicF", "cosmicY", "bob", "alice")
+    var existingUsers = mutableListOf<String>()
+    var existingEmails = mutableListOf<String>()
+
 //    you can use listOf<type>() instead of making the list & adding individually
 //    List<String> blah = new ArrayList<String>();
 //    blah.add("hi")
@@ -16,7 +18,12 @@ object RegistrationUtil {
     // isn't already taken
     // minimum number of characters is 3
     fun validateUsername(username: String) : Boolean {
-        return true
+
+            if (!existingUsers.contains(username)){
+                return true
+            }
+        return false
+
 
     }
 
@@ -31,14 +38,26 @@ object RegistrationUtil {
             return false
         }
 
-        password.count { it.isDigit() } > 0
+        if (password.count { it.isDigit() } <= 0){
+            return false
+        }
+        if (password.count { it.isUpperCase() } <= 0){
+            return false
+        }
+        if (password != confirmPassword && password.isEmpty()){
+            return false
+        }
+
 
         return true
     }
 
     // isn't empty
     fun validateName(name: String) : Boolean {
-        return true
+        if (name.isNotEmpty()) {
+            return true
+        }
+        return false
 
     }
 
@@ -46,6 +65,9 @@ object RegistrationUtil {
     // make sure the email isn't used
     // make sure it's in the proper email format user@domain.tld
     fun validateEmail(email: String) : Boolean {
-        return true
+        if (email.isNotEmpty() && !existingEmails.contains(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            return true
+        }
+        return false
     }
 }

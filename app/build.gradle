@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id("kotlin-parcelize")
 }
 
 android {
@@ -29,6 +30,8 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+        coreLibraryDesugaringEnabled = true
+
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -54,4 +57,5 @@ dependencies {
     // google truth library for unit testing
     testImplementation "com.google.truth:truth:1.1.3"
     androidTestImplementation "com.google.truth:truth:1.1.3"
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
 }
